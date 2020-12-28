@@ -1,7 +1,7 @@
 {
-  "name": "Prioritab",
-  "description": "A new tab page to remind you of your priorities",
-  "version": "2.0.0",
+  "name": "Tasker Tab",
+  "description": "A new tab page where you can add tasks and look at the time left",
+  "version": "1.0.0",
   "chrome_url_overrides": {
     "newtab": "prioritab.html"
   },
