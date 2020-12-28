@@ -2,4 +2,4 @@
 
 This is basically like prioritab v2.
 
-Since the development stopped for prioritab and i am picking this up.
+Since the development stopped for prioritab, i am picking this up.
