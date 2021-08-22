@@ -182,7 +182,7 @@ function SetDateTimeFormat() {
 		}
 	);
 }
-window.onload = function () {
+$(window).on("load", function () {
 	SetDateTimeFormat();
 	chrome.storage.sync.get("user-use-workday", function (result) {
 		if (result["user-use-workday"] === "true") {
@@ -339,4 +339,4 @@ window.onload = function () {
 	$("#uninstall-extension-button").click(function (e) {
 		chrome.management.uninstallSelf({ showConfirmDialog: !0 });
 	});
-};
+});

@@ -163,37 +163,36 @@ $(function () {
 	});
 
 	// Add todo
-	$formLeft.submit(function (e) {
+	$formLeft.on("submit", function (e) {
 		e.preventDefault();
 		$.publish("/add/", []);
 	});
 
-	$formMid.submit(function (e) {
+	$formMid.on("submit", function (e) {
 		e.preventDefault();
 		$.publish("/add/", []);
 	});
 
-	$formRight.submit(function (e) {
+	$formRight.on("submit", function (e) {
 		e.preventDefault();
 		$.publish("/add/", []);
 	});
 
 	// Remove todo
-	$itemListLeft.delegate("a", "click", function (e) {
+	$itemListLeft.on("click", "a", function (e) {
 		var $this = $(this);
 		e.preventDefault();
 		$.publish("/remove/", [$this]);
 	});
 
-	$itemListMid.delegate("a", "click", function (e) {
+	$itemListMid.on("click", "a", function (e) {
 		var $this = $(this);
 		e.preventDefault();
 		$.publish("/remove/", [$this]);
 	});
 
-	$itemListRight.delegate("a", "click", function (e) {
+	$itemListRight.on("click", "a", function (e) {
 		var $this = $(this);
-
 		e.preventDefault();
 		$.publish("/remove/", [$this]);
 	});
@@ -201,9 +200,6 @@ $(function () {
 	// Sort todo
 	$("#shown-items-left,#shown-items-right, #shown-items-mid").sortable({
 		connectWith: "#shown-items-left,#shown-items-right, #shown-items-mid",
-		// start: function (event, ui) {
-		// 		ui.item.toggleClass("highlight");
-		// },
 		stop: function (event, ui) {
 			$.publish("/regenerate-list/", []);
 		},
