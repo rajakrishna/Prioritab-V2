@@ -18,7 +18,7 @@ $(function () {
 		$itemListLeft = $("#shown-items-left"),
 		$itemListMid = $("#shown-items-mid"),
 		$itemListRight = $("#shown-items-right"),
-		$editable = $(".editable"),
+		// $editable = $(".editable"),
 		$sweepDone = $(".sweep-link"),
 		$clearAll = $(".clear-all-link"),
 		$newTodo = $(".todo"),
@@ -199,11 +199,17 @@ $(function () {
 
 	// Sort todo
 	$("#shown-items-left,#shown-items-right, #shown-items-mid").sortable({
-		connectWith: "#shown-items-left,#shown-items-right, #shown-items-mid",
+		// connectWith: "#shown-items-left,#shown-items-right, #shown-items-mid",
+		connectWith:".shown-items",
+		revert: false,
+    	scrollSpeed: 10,
 		stop: function (event, ui) {
 			$.publish("/regenerate-list/", []);
 		},
 	});
+
+
+	
 
 	// Edit and save todo
 	$(".todo-text").inlineEdit({
@@ -218,21 +224,30 @@ $(function () {
 	});
 
 	// Sweep done
-	$sweepDone.click(function (e) {
+	$sweepDone.on("click", function (e) {
 		e.preventDefault();
 		var listToImpact = e.originalEvent.srcElement.getAttribute("data-list");
 		$.publish("/clear-all/", [listToImpact, false]);
 	});
 
 	// Clear all
-	$clearAll.click(function (e) {
+	$clearAll.on("click", function (e) {
 		e.preventDefault();
 		var listToImpact = e.originalEvent.srcElement.getAttribute("data-list");
 		$.publish("/clear-all/", [listToImpact, true]);
 	});
 
 	// Fade In and Fade Out the Remove link on hover
-	$itemListLeft.delegate("li", "mouseover mouseout", function (event) {
+	$itemListLeft.on( "mouseover mouseout","li", function (event) {
+		var $this = $(this).find("a");
+		if (event.type === "mouseover") {
+			$this.stop(true, true).fadeIn();
+		} else {
+			$this.stop(true, true).fadeOut();
+		}
+	});
+
+	$itemListMid.on( "mouseover mouseout","li", function (event) {
 		var $this = $(this).find("a");
 
 		if (event.type === "mouseover") {
@@ -242,17 +257,7 @@ $(function () {
 		}
 	});
 
-	$itemListMid.delegate("li", "mouseover mouseout", function (event) {
-		var $this = $(this).find("a");
-
-		if (event.type === "mouseover") {
-			$this.stop(true, true).fadeIn();
-		} else {
-			$this.stop(true, true).fadeOut();
-		}
-	});
-
-	$itemListRight.delegate("li", "mouseover mouseout", function (event) {
+	$itemListRight.on( "mouseover mouseout","li", function (event) {
 		var $this = $(this).find("a");
 
 		if (event.type === "mouseover") {
@@ -314,9 +319,9 @@ $(function () {
 			});
 
 			// Hide the new list, then fade it in for effects
-			$("#todo-" + listID + "-" + listCounter)
-				.css("display", "none")
-				.fadeIn();
+			// $("#todo-" + listID + "-" + listCounter)
+			// 	.css("display", "none")
+			// 	.fadeIn();
 
 			// Empty the input field
 			todoToAdd.value = "";
@@ -435,9 +440,9 @@ $(function () {
 	};
 
 	$.subscribe("/regenerate-list/", function () {
-		var $todoItemsLeft = $("#shown-items-left li"),
-			$todoItemsMid = $("#shown-items-mid li");
-		$todoItemsRight = $("#shown-items-right li");
+		var $todoItemsLeft = $("#shown-items-left li");
+		var	$todoItemsMid = $("#shown-items-mid li");
+		var $todoItemsRight = $("#shown-items-right li");
 
 		// Make sure all items in the respective lists have the right 'tag'
 		// (in event of cross-list movement)

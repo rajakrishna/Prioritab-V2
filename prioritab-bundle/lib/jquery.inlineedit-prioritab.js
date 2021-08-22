@@ -1,8 +1,3 @@
-// MODIFIED BY ME - Dec. 2015
-/* Changes:
-    - All 'click' events changed to 'dblclick'
-*/
-
 /*
  * jQuery inlineEdit
  *

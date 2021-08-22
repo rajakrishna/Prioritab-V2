@@ -104,7 +104,7 @@ function CountdownMonthYear() {
 		Math.round(100 - prettyYearPCT) + "%";
 	setTimeout(CountdownMonthYear, 1000);
 }
-$(document).click(function (event) {
+$(document).on("click", function (event) {
 	if (!$(event.target).closest("#customize-corner").length) {
 		if ($("#customize-corner").is(":visible")) {
 			$("#customize-selectors").hide();
@@ -202,7 +202,7 @@ $(window).on("load", function () {
 			chrome.storage.sync.set({ "update-20151231": !0 });
 		}
 	});
-	$("#update-hide").click(function (e) {
+	$("#update-hide").on("click", function (e) {
 		$("#update-footer").hide();
 		chrome.storage.sync.set({ "update-20151231": !0 });
 	});
@@ -219,7 +219,7 @@ $(window).on("load", function () {
 			$("#workday-end-timeinput")[0].value = workdayEnd;
 		}
 	);
-	$(".edit-priorities-link").click(function (e) {
+	$(".edit-priorities-link").on("click", function (e) {
 		$(".edit-priorities").each(function (index) {
 			$(this).hide();
 			$(this).siblings(".edit-priorities-link").fadeIn();
@@ -227,13 +227,14 @@ $(window).on("load", function () {
 		$(this).hide();
 		prioritiesList = $(this).siblings(".edit-priorities")[0];
 		$(prioritiesList).fadeIn();
-		$(prioritiesList).find("input.todo").focus();
+		$(prioritiesList).find("input.todo").trigger("focus");
 	});
-	$(".hide-edit").click(function (e) {
+	$(".hide-edit").on("click", function (e) {
 		$(this).parent().hide();
 		$(this).parent().siblings(".edit-priorities-link").show();
 	});
-	$("#info-corner").hover(
+	$("#info-corner").on(
+		"hover",
 		function () {
 			$(this).children("#info-button").hide();
 			$(this).children("#info").fadeIn();
@@ -243,11 +244,11 @@ $(window).on("load", function () {
 			$(this).children("#info-button").fadeIn();
 		}
 	);
-	$("#customize-button").click(function () {
+	$("#customize-button").on("click", function () {
 		$("#customize-button").hide();
 		$("#customize-selectors").fadeIn();
 	});
-	$("#hide-customize-selectors").click(function () {
+	$("#hide-customize-selectors").on("click", function () {
 		$("#customize-selectors").hide();
 		$("#customize-button").fadeIn();
 	});
@@ -295,12 +296,12 @@ $(window).on("load", function () {
 			$(".color-selector-label").css("font-weight", "normal");
 		},
 	});
-	$(".customize-selector-label").click(function (e) {
+	$(".customize-selector-label").on("click", function (e) {
 		$(this).siblings(".color-selector-label").css("visibility", "hidden");
 		$(this).show();
 		$(this).css("font-weight", "bold");
 	});
-	$("#restore-default-colors").click(function (e) {
+	$("#restore-default-colors").on("click", function (e) {
 		SetColorProperty("main-bgcolor", "background-color", "#222222");
 		chrome.storage.sync.set({ "user-background-color": "#222222" });
 		SetColorProperty("main-font-color", "color", "white");
@@ -316,10 +317,10 @@ $(window).on("load", function () {
 			"user-shadow-color": "rgba(255, 255, 255, 0.3)",
 		});
 	});
-	$("#workday-checkbox").click(function (e) {
+	$("#workday-checkbox").on("click", function (e) {
 		CheckDayCountdown();
 	});
-	$("#workday-time-save").click(function (e) {
+	$("#workday-time-save").on("click", function (e) {
 		var workdayStart = $("#workday-start-timeinput")[0].value,
 			workdayEnd = $("#workday-end-timeinput")[0].value;
 		chrome.storage.sync.set({
@@ -328,7 +329,7 @@ $(window).on("load", function () {
 		});
 		CheckDayCountdown();
 	});
-	$("#date-time-format-save").click(function (e) {
+	$("#date-time-format-save").on("click", function (e) {
 		dateFormat = $("#date-format-input option:selected").text();
 		timeFormat = $("#time-format-input option:selected").text();
 		chrome.storage.sync.set({ "user-time-format": timeFormat });
@@ -336,7 +337,7 @@ $(window).on("load", function () {
 		GetDate();
 		GetTime();
 	});
-	$("#uninstall-extension-button").click(function (e) {
+	$("#uninstall-extension-button").on("click", function (e) {
 		chrome.management.uninstallSelf({ showConfirmDialog: !0 });
 	});
 });
